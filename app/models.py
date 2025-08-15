@@ -5,7 +5,7 @@ from django.contrib.auth.models import AbstractUser
 class Usuario(AbstractUser):
 
     ## Atributes ##
-    cpf = models.CharField(max_length=11, null=False, blank=False)
+    cpf = models.CharField(max_length=11, null=False, blank=False, primary_key=True)
 
     ## Methods ##
     @classmethod
