@@ -23,7 +23,7 @@ def loginPage(request):
 
             return redirect(home)
 
-    return render(request, 'loginPage.html')
+    return render(request, 'sesi_login_page.html')
 
 def signupPage(request):
 
@@ -39,7 +39,7 @@ def signupPage(request):
 
         return redirect(loginPage)
 
-    return render(request, 'signupPage.html')
+    return render(request, 'sesi_senai_signup.html')
 
 @login_required(login_url=loginPage)
 def home(request):
@@ -58,7 +58,7 @@ def home(request):
     for logo in logos:
         likes.append(logo.likes)
 
-    mostLiked = max(likes)
+        mostLiked = max(likes)
     
     ## UsersLiked
     for user in users:
@@ -82,7 +82,7 @@ def home(request):
 
         return redirect(home)
 
-    return render(request, 'home.html', {'logos':logos, 'usersLiked':usersLiked, 'usersCount':usersCount, 'mostLikedClasses':mostLikedClasses})
+    return render(request, 'jeis_logo_viewer.html', {'logos':logos, 'usersLiked':usersLiked, 'usersCount':usersCount, 'mostLikedClasses':mostLikedClasses})
 
 @login_required(login_url=loginPage)
 def logoffOption(request):
@@ -95,6 +95,9 @@ def logoffOption(request):
 def deletarLogo(request, id):
 
     Logo.deleteLogo(id)
+    user = Usuario.objects.get(cpf=request.user.cpf)
+    user.liked = 0
+    user.save()
 
     return redirect(home)
 
@@ -115,3 +118,22 @@ def curtirLogo(request, id):
     user.save()
 
     return redirect(home)
+
+@login_required(login_url=loginPage)
+def editarLogo(request, id):
+
+    logo = Logo.objects.get(id=id)
+
+    if request.method == "POST":
+
+        imagem = request.FILES.get("imagem")
+        turma = request.POST.get("turma")
+
+        logo.turma = turma
+        logo.imagem = imagem
+
+        logo.save()
+
+        return redirect(home)
+
+    return render(request, 'editarLogo.html', {'logo':logo})

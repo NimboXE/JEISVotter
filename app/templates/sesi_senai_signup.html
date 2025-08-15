@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JEIS Logo Votter - SignUp</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 50%, #90caf9 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Partículas animadas de fundo */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .particle {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.6);
+            border-radius: 50%;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .particle:nth-child(odd) {
+            animation-delay: -2s;
+        }
+
+        .particle:nth-child(even) {
+            animation-delay: -4s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+        }
+
+        /* Container principal */
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2.5rem;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 450px;
+            position: relative;
+            z-index: 10;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        /* Logo e header */
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .logo {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #1976d2, #42a5f5);
+            border-radius: 50%;
+            margin-bottom: 1rem;
+            box-shadow: 0 10px 25px rgba(25, 118, 210, 0.3);
+            position: relative;
+        }
+
+        .logo::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #1976d2, #42a5f5);
+            animation: pulse 2s ease-in-out infinite;
+            z-index: -1;
+        }
+
+        .logo i {
+            color: white;
+            font-size: 2rem;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.1); opacity: 0.7; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .title {
+            color: #1565c0;
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            overflow: hidden;
+        }
+
+        .subtitle {
+            color: #64b5f6;
+            font-size: 1rem;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+
+        .tagline {
+            color: #666;
+            font-size: 0.9rem;
+            font-style: italic;
+        }
+
+        /* Formulário */
+        .form-group {
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        .form-group label {
+            display: block;
+            color: #1565c0;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            font-size: 0.95rem;
+        }
+
+        .input-container {
+            position: relative;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 1rem 1rem 1rem 3rem;
+            border: 2px solid #e3f2fd;
+            border-radius: 12px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.8);
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: #42a5f5;
+            box-shadow: 0 0 20px rgba(66, 165, 245, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .input-icon {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #64b5f6;
+            font-size: 1.1rem;
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #64b5f6;
+            cursor: pointer;
+            font-size: 1.1rem;
+            transition: color 0.3s ease;
+        }
+
+        .password-toggle:hover {
+            color: #1976d2;
+        }
+
+        /* Botões */
+        .btn {
+            width: 100%;
+            padding: 1rem;
+            border: none;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #1976d2, #42a5f5);
+            color: white;
+            margin-bottom: 1rem;
+            box-shadow: 0 8px 25px rgba(25, 118, 210, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(25, 118, 210, 0.4);
+        }
+
+        .btn-primary:active {
+            transform: translateY(-1px);
+        }
+
+        .btn-secondary {
+            background: rgba(144, 202, 249, 0.2);
+            color: #1565c0;
+            border: 2px solid #90caf9;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(144, 202, 249, 0.3);
+            transform: translateY(-2px);
+        }
+
+        /* Loading animation */
+        .loading {
+            display: none;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .spinner {
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-top: 2px solid white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Efeitos visuais extras */
+        .sparkle {
+            position: absolute;
+            pointer-events: none;
+            color: #64b5f6;
+            animation: sparkle 1.5s ease-in-out;
+        }
+
+        @keyframes sparkle {
+            0% { opacity: 0; transform: scale(0) rotate(0deg); }
+            50% { opacity: 1; transform: scale(1) rotate(180deg); }
+            100% { opacity: 0; transform: scale(0) rotate(360deg); }
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .container {
+                margin: 1rem;
+                padding: 2rem;
+                max-width: 90%;
+            }
+            
+            .title {
+                font-size: 1.5rem;
+            }
+            
+            .form-control {
+                padding: 0.9rem 0.9rem 0.9rem 2.8rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 1.5rem;
+            }
+            
+            .logo {
+                width: 60px;
+                height: 60px;
+            }
+            
+            .logo i {
+                font-size: 1.5rem;
+            }
+        }
+
+        /* Validação visual */
+        .form-control.error {
+            border-color: #f44336;
+            animation: shake 0.5s ease-in-out;
+        }
+
+        .form-control.success {
+            border-color: #4caf50;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+
+        .error-message {
+            color: #f44336;
+            font-size: 0.8rem;
+            margin-top: 0.3rem;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- Partículas de fundo -->
+    <div class="particles">
+        <div class="particle" style="left: 10%; top: 20%; width: 4px; height: 4px;"></div>
+        <div class="particle" style="left: 80%; top: 80%; width: 6px; height: 6px;"></div>
+        <div class="particle" style="left: 60%; top: 30%; width: 3px; height: 3px;"></div>
+        <div class="particle" style="left: 20%; top: 70%; width: 5px; height: 5px;"></div>
+        <div class="particle" style="left: 90%; top: 20%; width: 4px; height: 4px;"></div>
+        <div class="particle" style="left: 30%; top: 90%; width: 6px; height: 6px;"></div>
+        <div class="particle" style="left: 70%; top: 10%; width: 3px; height: 3px;"></div>
+        <div class="particle" style="left: 40%; top: 50%; width: 5px; height: 5px;"></div>
+    </div>
+
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="logo">
+                <i class="fas fa-bolt"></i>
+            </div>
+            <h1 class="title" id="typewriter"></h1>
+            <p class="subtitle">SESI SENAI</p>
+            <p class="tagline">Jogos Estudantis • Energia em Movimento</p>
+        </div>
+
+        <!-- Formulário -->
+        <form action="{% url 'signupPage' %}" method="POST" id="signupForm">
+            {% csrf_token %}
+            
+            <div class="form-group">
+                <label for="username">Nome de Usuário</label>
+                <div class="input-container">
+                    <i class="fas fa-user input-icon"></i>
+                    <input type="text" name="username" id="username" class="form-control" required>
+                </div>
+                <div class="error-message" id="username-error"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="email">E-mail Institucional</label>
+                <div class="input-container">
+                    <i class="fas fa-envelope input-icon"></i>
+                    <input type="email" name="email" id="email" class="form-control" placeholder="seuemail@sesigoias.com.br" required>
+                </div>
+                <div class="error-message" id="email-error"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="cpf">CPF</label>
+                <div class="input-container">
+                    <i class="fas fa-id-card input-icon"></i>
+                    <input type="text" name="cpf" id="cpf" class="form-control" placeholder="000.000.000-00" maxlength="14" required>
+                </div>
+                <div class="error-message" id="cpf-error"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Senha</label>
+                <div class="input-container">
+                    <i class="fas fa-lock input-icon"></i>
+                    <input type="password" name="password" id="password" class="form-control" required>
+                    <i class="fas fa-eye password-toggle" id="togglePassword"></i>
+                </div>
+                <div class="error-message" id="password-error"></div>
+            </div>
+
+            <button type="submit" class="btn btn-primary" id="submitBtn">
+                <span class="btn-text">Cadastrar</span>
+                <div class="loading">
+                    <div class="spinner"></div>
+                </div>
+            </button>
+        </form>
+
+        <a href="{% url 'loginPage' %}" style="text-decoration: none;">
+            <button type="button" class="btn btn-secondary">
+                <i class="fas fa-arrow-left" style="margin-right: 0.5rem;"></i>
+                Voltar ao Login
+            </button>
+        </a>
+    </div>
+
+    <script>
+        // Efeito de digitação no título
+        const typewriterText = "Fazer Cadastro";
+        const typewriterElement = document.getElementById('typewriter');
+        let i = 0;
+
+        function typeWriter() {
+            if (i < typewriterText.length) {
+                typewriterElement.innerHTML += typewriterText.charAt(i);
+                i++;
+                setTimeout(typeWriter, 100);
+            }
+        }
+
+        // Iniciar efeito de digitação quando a página carregar
+        window.addEventListener('load', () => {
+            setTimeout(typeWriter, 500);
+        });
+
+        // Formatação automática do CPF
+        const cpfInput = document.getElementById('cpf');
+        cpfInput.addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\D/g, '');
+            value = value.replace(/(\d{3})(\d)/, '$1.$2');
+            value = value.replace(/(\d{3})(\d)/, '$1.$2');
+            value = value.replace(/(\d{3})(\d{1,2})$/, '$1-$2');
+            e.target.value = value;
+        });
+
+        // Toggle de visibilidade da senha
+        const togglePassword = document.getElementById('togglePassword');
+        const passwordInput = document.getElementById('password');
+
+        togglePassword.addEventListener('click', function() {
+            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordInput.setAttribute('type', type);
+            this.classList.toggle('fa-eye');
+            this.classList.toggle('fa-eye-slash');
+            
+            // Efeito sparkle
+            createSparkle(this);
+        });
+
+        // Função para criar efeito sparkle
+        function createSparkle(element) {
+            const sparkle = document.createElement('i');
+            sparkle.className = 'fas fa-sparkles sparkle';
+            sparkle.style.left = Math.random() * 20 + 'px';
+            sparkle.style.top = Math.random() * 20 + 'px';
+            element.parentNode.appendChild(sparkle);
+            
+            setTimeout(() => {
+                sparkle.remove();
+            }, 1500);
+        }
+
+        // Validação do formulário
+        const form = document.getElementById('signupForm');
+        const submitBtn = document.getElementById('submitBtn');
+
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            if (validateForm()) {
+                // Mostrar loading
+                submitBtn.querySelector('.btn-text').style.display = 'none';
+                submitBtn.querySelector('.loading').style.display = 'block';
+                submitBtn.disabled = true;
+                
+                // Simular envio (remover em produção)
+                setTimeout(() => {
+                    // Enviar formulário real
+                    form.submit();
+                }, 2000);
+            }
+        });
+
+        function validateForm() {
+            let isValid = true;
+            
+            // Validar username
+            const username = document.getElementById('username');
+            if (username.value.length < 3) {
+                showError(username, 'username-error', 'Nome de usuário deve ter pelo menos 3 caracteres');
+                isValid = false;
+            } else {
+                showSuccess(username, 'username-error');
+            }
+            
+            // Validar email
+            const email = document.getElementById('email');
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email.value)) {
+                showError(email, 'email-error', 'Digite um e-mail válido');
+                isValid = false;
+            } else {
+                showSuccess(email, 'email-error');
+            }
+            
+            // Validar CPF
+            const cpf = document.getElementById('cpf');
+            const cpfNumbers = cpf.value.replace(/\D/g, '');
+            if (cpfNumbers.length !== 11) {
+                showError(cpf, 'cpf-error', 'CPF deve conter 11 dígitos');
+                isValid = false;
+            } else {
+                showSuccess(cpf, 'cpf-error');
+            }
+            
+            // Validar senha
+            const password = document.getElementById('password');
+            if (password.value.length < 6) {
+                showError(password, 'password-error', 'Senha deve ter pelo menos 6 caracteres');
+                isValid = false;
+            } else {
+                showSuccess(password, 'password-error');
+            }
+            
+            return isValid;
+        }
+
+        function showError(input, errorId, message) {
+            input.classList.add('error');
+            input.classList.remove('success');
+            const errorElement = document.getElementById(errorId);
+            errorElement.textContent = message;
+            errorElement.style.display = 'block';
+        }
+
+        function showSuccess(input, errorId) {
+            input.classList.remove('error');
+            input.classList.add('success');
+            document.getElementById(errorId).style.display = 'none';
+        }
+
+        // Adicionar efeitos hover nos campos
+        const formControls = document.querySelectorAll('.form-control');
+        formControls.forEach(control => {
+            control.addEventListener('focus', function() {
+                this.parentNode.style.transform = 'scale(1.02)';
+                createSparkle(this.parentNode);
+            });
+            
+            control.addEventListener('blur', function() {
+                this.parentNode.style.transform = 'scale(1)';
+            });
+        });
+
+        // Animação das partículas
+        function animateParticles() {
+            const particles = document.querySelectorAll('.particle');
+            particles.forEach((particle, index) => {
+                const delay = index * 0.5;
+                particle.style.animationDelay = `-${delay}s`;
+            });
+        }
+
+        // Inicializar animações
+        window.addEventListener('load', animateParticles);
+    </script>
+</body>
+</html>

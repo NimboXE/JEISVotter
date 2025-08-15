@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JEIS Logo Voter - Home</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-blue: #e3f2fd;
+            --secondary-blue: #bbdefb;
+            --accent-blue: #90caf9;
+            --dark-blue: #1976d2;
+            --white: #ffffff;
+            --light-gray: #f5f5f5;
+            --shadow: rgba(25, 118, 210, 0.15);
+            --gradient: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 50%, #90caf9 100%);
+            --card-gradient: linear-gradient(145deg, #ffffff 0%, #f8fbff 100%);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--gradient);
+            min-height: 100vh;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        /* Particles Background */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .particle {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 50%;
+            animation: float 20s infinite linear;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Header */
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1.5rem 2rem;
+            box-shadow: 0 4px 20px var(--shadow);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 3px solid var(--accent-blue);
+        }
+
+        .logo-title {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo-icon {
+            width: 50px;
+            height: 50px;
+            background: var(--gradient);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: var(--dark-blue);
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            from { box-shadow: 0 0 20px rgba(144, 202, 249, 0.4); }
+            to { box-shadow: 0 0 30px rgba(144, 202, 249, 0.8); }
+        }
+
+        .welcome-text {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: var(--dark-blue);
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .username {
+            color: var(--accent-blue);
+            font-weight: 700;
+        }
+
+        .logout-btn {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a52);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(238, 90, 82, 0.3);
+        }
+
+        .logout-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(238, 90, 82, 0.4);
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Dashboard */
+        .dashboard {
+            background: var(--card-gradient);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 8px 32px var(--shadow);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+        }
+
+        .dashboard h2 {
+            color: var(--dark-blue);
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .dashboard h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: var(--gradient);
+            border-radius: 2px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            padding: 1.5rem;
+            text-align: center;
+            border: 2px solid var(--primary-blue);
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px var(--shadow);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--dark-blue);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: #666;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .most-liked {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        .most-liked h3 {
+            color: var(--dark-blue);
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .class-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem;
+            margin-bottom: 0.5rem;
+            background: var(--primary-blue);
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .class-item:hover {
+            background: var(--secondary-blue);
+            transform: translateX(5px);
+        }
+
+        /* Form Section */
+        .form-section {
+            background: var(--card-gradient);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 8px 32px var(--shadow);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+        }
+
+        .form-section h3 {
+            color: var(--dark-blue);
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            color: var(--dark-blue);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid var(--primary-blue);
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.9);
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--accent-blue);
+            box-shadow: 0 0 0 3px rgba(144, 202, 249, 0.2);
+        }
+
+        .file-input {
+            position: relative;
+            overflow: hidden;
+            display: inline-block;
+            width: 100%;
+        }
+
+        .file-input input[type=file] {
+            position: absolute;
+            left: -9999px;
+        }
+
+        .file-input-label {
+            display: block;
+            padding: 1rem;
+            background: var(--gradient);
+            color: var(--dark-blue);
+            border-radius: 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+
+        .file-input-label:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px var(--shadow);
+        }
+
+        .btn-primary {
+            background: var(--gradient);
+            color: var(--dark-blue);
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px var(--shadow);
+            display: block;
+            margin: 0 auto;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px var(--shadow);
+        }
+
+        /* Logo Grid */
+        .logos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .logo-card {
+            background: var(--card-gradient);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 8px 32px var(--shadow);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .logo-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--gradient);
+        }
+
+        .logo-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 40px var(--shadow);
+        }
+
+        .logo-card h3 {
+            color: var(--dark-blue);
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            font-weight: 700;
+        }
+
+        .logo-image {
+            width: 100%;
+            height: 300px;
+            object-fit: contain;
+            border-radius: 15px;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+            border: 2px solid var(--primary-blue);
+            transition: all 0.3s ease;
+        }
+
+        .logo-image:hover {
+            border-color: var(--accent-blue);
+            box-shadow: 0 4px 20px var(--shadow);
+        }
+
+        .logo-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-vote {
+            background: linear-gradient(135deg, #4caf50, #45a049);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-vote::before {
+            content: '⚡';
+            margin-right: 0.5rem;
+        }
+
+        .btn-vote:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(76, 175, 80, 0.4);
+        }
+
+        .btn-delete {
+            background: linear-gradient(135deg, #f44336, #d32f2f);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(244, 67, 54, 0.3);
+        }
+
+        .btn-delete:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(244, 67, 54, 0.4);
+        }
+
+        /* Loading Animation */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 1s ease-in-out infinite;
+            margin-right: 0.5rem;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                gap: 1rem;
+                padding: 1rem;
+            }
+
+            .welcome-text {
+                font-size: 1.4rem;
+                text-align: center;
+            }
+
+            .container {
+                padding: 1rem;
+            }
+
+            .logos-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .logo-card {
+                padding: 1.5rem;
+            }
+
+            .logo-image {
+                height: 250px;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .logo-actions {
+                flex-direction: column;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo-image {
+                height: 200px;
+            }
+
+            .welcome-text {
+                font-size: 1.2rem;
+            }
+
+            .dashboard h2 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="particles" id="particles"></div>
+    
+    <header class="header">
+        <div class="logo-title">
+            <div class="logo-icon">⚡</div>
+            <div class="welcome-text">
+                Bem-vindo, <span class="username">{{ request.user.username }}</span>
+            </div>
+        </div>
+        <a href="{% url 'logoffOption' %}">
+            <button class="logout-btn">Logout</button>
+        </a>
+    </header>
+
+        {% if request.user.is_superuser == 1 %}
+        <div class="form-section">
+            <h3>📝 Cadastrar Nova Logo</h3>
+            <form action="{% url 'editarLogo' logo.id %}" method="post" enctype="multipart/form-data" id="logoForm">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="turma">Nome da Turma:</label>
+                    <input type="text" id="turma" name="turma" class="form-control" placeholder="Digite o nome da turma" required value="{{logo.turma}}">
+                </div>
+                
+                <div class="form-group">
+                    <label for="imagem">Imagem da Logo:</label>
+                    <div class="file-input">
+                        <input type="file" id="imagem" name="imagem" accept="image/*" required>
+                        <label for="imagem" class="file-input-label" id="fileLabel">
+                            📁 Escolher arquivo de imagem
+                        </label>
+                    </div>
+                </div>
+                
+                <button type="submit" class="btn-primary" id="submitBtn">
+                    Editar Logo
+                </button>
+            </form>
+        </div>
+        {% endif %}
+    </div>
+
+    <script>
+        // Create floating particles
+        function createParticles() {
+            const particles = document.getElementById('particles');
+            
+            for (let i = 0; i < 50; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.width = Math.random() * 6 + 2 + 'px';
+                particle.style.height = particle.style.width;
+                particle.style.animationDelay = Math.random() * 20 + 's';
+                particle.style.animationDuration = (Math.random() * 20 + 10) + 's';
+                particles.appendChild(particle);
+            }
+        }
+
+        // File input handling
+        document.getElementById('imagem')?.addEventListener('change', function(e) {
+            const label = document.getElementById('fileLabel');
+            if (e.target.files.length > 0) {
+                label.innerHTML = `📁 ${e.target.files[0].name}`;
+                label.style.background = 'linear-gradient(135deg, #4caf50, #45a049)';
+                label.style.color = 'white';
+            } else {
+                label.innerHTML = '📁 Escolher arquivo de imagem';
+                label.style.background = '';
+                label.style.color = '';
+            }
+        });
+
+        // Form submission with loading
+        document.getElementById('logoForm')?.addEventListener('submit', function(e) {
+            const submitBtn = document.getElementById('submitBtn');
+            const turma = document.getElementById('turma').value.trim();
+            const imagem = document.getElementById('imagem').files[0];
+
+            if (!turma) {
+                e.preventDefault();
+                alert('Por favor, digite o nome da turma.');
+                return;
+            }
+
+            if (!imagem) {
+                e.preventDefault();
+                alert('Por favor, selecione uma imagem.');
+                return;
+            }
+
+            // Show loading
+            submitBtn.innerHTML = '<span class="loading"></span>Cadastrando...';
+            submitBtn.disabled = true;
+        });
+
+        // Smooth scroll for better UX
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Add hover effects to logo cards
+        document.querySelectorAll('.logo-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-10px) scale(1.02)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+
+        // Initialize particles
+        createParticles();
+
+        // Add some interactivity to stat cards
+        document.querySelectorAll('.stat-card').forEach(card => {
+            card.addEventListener('click', function() {
+                this.style.transform = 'translateY(-5px) scale(1.05)';
+                setTimeout(() => {
+                    this.style.transform = 'translateY(-5px) scale(1)';
+                }, 200);
+            });
+        });
+    </script>
+</body>
+</html>
