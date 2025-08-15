@@ -18,6 +18,7 @@ class Logo(models.Model):
     ## Atributes ##
     turma = models.CharField(max_length=40, null=False, blank=False)
     imagem = models.FileField(null=False, blank=False)
+    likes = models.IntegerField(null=False, blank=False, default=0)
 
     ## Methods ##
     @classmethod

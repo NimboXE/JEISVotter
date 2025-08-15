@@ -10,6 +10,16 @@
     <a href="{% url 'logoffOption' %}"><button>Logout</button></a>
     <hr>
     {% if request.user.is_superuser == 1 %}
+        <h2>DASHBOARD</h2>
+        <h3>Usuários: {{usersCount}}</h3>
+        <h3>Usuários que Votaram: {{usersLiked}}</h3>
+        <h3>Turmas mais curtidas:</h3>
+        {% for class in mostLikedClasses %}
+        <h3>{{class.turma}}: Likes: {{class.likes}}</h3>
+        {% endfor %}
+        <hr>
+    {% endif %}
+    {% if request.user.is_superuser == 1 %}
     <h3>Cadastrar Logo</h3>
     <form action="{% url 'home' %}" method="post" enctype="multipart/form-data">
         {% csrf_token %}

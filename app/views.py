@@ -11,14 +11,11 @@ def loginPage(request):
         cpf = request.POST.get("cpf")
         password = request.POST.get("password")
 
-        print(cpf, password)
-
         ## Getting user's object for username ##
         userObject = Usuario.objects.get(cpf=cpf)
 
         ## Authenticating the user ##
         user = authenticate(request, username=userObject.username, password=password)
-        print(user)
 
         ## Authenticating the existence and loginning the user ##
         if user is not None:
@@ -50,8 +47,28 @@ def home(request):
     ## Logos ##
     logos = Logo.objects.all()
     
-    ## Likes ##
-    likes = Like.objects.all()
+    ## Dashboard ##
+    likes = []
+    users = Usuario.objects.all()
+    usersCount = users.count()
+    usersLiked = 0
+    mostLikedClasses = []
+
+    ## Filling the likes array 
+    for logo in logos:
+        likes.append(logo.likes)
+
+    mostLiked = max(likes)
+    
+    ## UsersLiked
+    for user in users:
+        if user.liked == 1:
+            usersLiked += 1
+
+    ## Filling the mostLikedClasses
+    for logo in logos:
+        if logo.likes == mostLiked:
+            mostLikedClasses.append(logo)
 
     ## Post for adding logo ##
     if request.method == 'POST':
@@ -65,7 +82,7 @@ def home(request):
 
         return redirect(home)
 
-    return render(request, 'home.html', {'logos':logos, 'likes':likes})
+    return render(request, 'home.html', {'logos':logos, 'usersLiked':usersLiked, 'usersCount':usersCount, 'mostLikedClasses':mostLikedClasses})
 
 @login_required(login_url=loginPage)
 def logoffOption(request):
@@ -92,6 +109,8 @@ def curtirLogo(request, id):
 
     ## Liking ##
     Like.giveLike(request.user, logo)
+    logo.likes += 1
+    logo.save()
     user.liked = 1
     user.save()
 
