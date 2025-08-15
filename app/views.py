@@ -46,7 +46,26 @@ def signupPage(request):
 
 @login_required(login_url=loginPage)
 def home(request):
-    return render(request, 'home.html')
+
+    ## Logos ##
+    logos = Logo.objects.all()
+    
+    ## Likes ##
+    likes = Like.objects.all()
+
+    ## Post for adding logo ##
+    if request.method == 'POST':
+
+        ## Taking the values ##
+        turma = request.POST.get("turma")
+        imagem = request.FILES.get("imagem")
+
+        ## Creating the logo on DB ##
+        Logo.createLogo(turma, imagem)
+
+        return redirect(home)
+
+    return render(request, 'home.html', {'logos':logos, 'likes':likes})
 
 @login_required(login_url=loginPage)
 def logoffOption(request):
@@ -54,3 +73,26 @@ def logoffOption(request):
     logout(request)
 
     return redirect(loginPage)
+
+@login_required(login_url=loginPage)
+def deletarLogo(request, id):
+
+    Logo.deleteLogo(id)
+
+    return redirect(home)
+
+@login_required(login_url=loginPage)
+def curtirLogo(request, id):
+
+    ## Taking the user ##
+    user = Usuario.objects.get(cpf=request.user.cpf)
+
+    ## Logo ##
+    logo = Logo.objects.get(id=id)
+
+    ## Liking ##
+    Like.giveLike(request.user, logo)
+    user.liked = 1
+    user.save()
+
+    return redirect(home)

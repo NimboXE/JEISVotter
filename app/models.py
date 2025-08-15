@@ -6,6 +6,7 @@ class Usuario(AbstractUser):
 
     ## Atributes ##
     cpf = models.CharField(max_length=11, null=False, blank=False, primary_key=True)
+    liked = models.BooleanField(null=False, blank=False, default=0)
 
     ## Methods ##
     @classmethod

@@ -26,4 +26,6 @@ urlpatterns = [
     path('signup/', signupPage, name='signupPage'),
     path('home/', home, name='home'),
     path('logout/', logoffOption, name='logoffOption'),
+    path('deletarLogo/<id>', deletarLogo, name='deletarLogo'),
+    path('curtirLogo/<id>', curtirLogo, name='curtirLogo'),
 ] + static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
