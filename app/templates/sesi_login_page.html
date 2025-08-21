@@ -1,9 +1,12 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SESI SENAI - Login dos Jogos Estudantis</title>
+    <link rel="shortcut icon" href="{% static 'faviconV2.png' %}" type="image/x-icon">
     <style>
         * {
             margin: 0;
@@ -297,7 +300,9 @@
     
     <div class="container">
         <div class="logo-section">
-            <div class="logo">⚡</div>
+            <div class="">
+                <img src="{% static 'sesi.png' %}" alt="" srcset="" width="300px">
+            </div>
             <h1>Fazer Login</h1>
             <p class="subtitle">SESI SENAI - Jogos Estudantis</p>
         </div>

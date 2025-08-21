@@ -1,9 +1,12 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>JEIS Logo Voter - Home</title>
+    <link rel="shortcut icon" href="{% static 'faviconV2.png' %}" type="image/x-icon">
     <style>
         * {
             margin: 0;
@@ -512,7 +515,9 @@
     
     <header class="header">
         <div class="logo-title">
-            <div class="logo-icon">⚡</div>
+            <div class="">
+                <img src="{% static 'sesi.png' %}" alt="" srcset="" width="200px">
+            </div>
             <div class="welcome-text">
                 Bem-vindo, <span class="username">{{ request.user.username }}</span>
             </div>
@@ -524,6 +529,7 @@
 
         {% if request.user.is_superuser == 1 %}
         <div class="form-section">
+            
             <h3>📝 Cadastrar Nova Logo</h3>
             <form action="{% url 'editarLogo' logo.id %}" method="post" enctype="multipart/form-data" id="logoForm">
                 {% csrf_token %}
@@ -540,12 +546,20 @@
                             📁 Escolher arquivo de imagem
                         </label>
                     </div>
-                </div>
-                
-                <button type="submit" class="btn-primary" id="submitBtn">
-                    Editar Logo
-                </button>
+                </div>  
+
+                    <button type="submit" class="btn-primary" id="submitBtn">
+                        Editar Logo
+                    </button>
             </form>
+
+                <div style="margin-top: 3vh;">   
+                    <a href="{% url 'home' %}" style="text-decoration: none; margin-right: auto;">
+                        <button type="" class="btn-primary" id="submitBtn">
+                            Voltar
+                        </button>
+                    </a>
+                </div>
         </div>
         {% endif %}
     </div>

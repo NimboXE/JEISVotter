@@ -1,9 +1,12 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>JEIS Logo Voter - Home</title>
+    <link rel="shortcut icon" href="{% static 'faviconV2.png' %}" type="image/x-icon">
     <style>
         * {
             margin: 0;
@@ -512,7 +515,9 @@
     
     <header class="header">
         <div class="logo-title">
-            <div class="logo-icon">⚡</div>
+            <div class="">
+                <img src="{% static 'sesi.png' %}" alt="" srcset="" width="200px">
+            </div>
             <div class="welcome-text">
                 Bem-vindo, <span class="username">{{ request.user.username }}</span>
             </div>

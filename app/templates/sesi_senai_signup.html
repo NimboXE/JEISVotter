@@ -1,9 +1,12 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>JEIS Logo Votter - SignUp</title>
+    <link rel="shortcut icon" href="{% static 'faviconV2.png' %}" type="image/x-icon">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
         * {
@@ -341,8 +344,8 @@
     <div class="container">
         <!-- Header -->
         <div class="header">
-            <div class="logo">
-                <i class="fas fa-bolt"></i>
+            <div class="">
+                <img src="{% static 'sesi.png' %}" alt="" srcset="" width="300px">
             </div>
             <h1 class="title" id="typewriter"></h1>
             <p class="subtitle">SESI SENAI</p>
