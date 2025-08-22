@@ -8,20 +8,25 @@ def loginPage(request):
 
     ## Login ##
     if request.method == 'POST':
-        cpf = request.POST.get("cpf")
-        password = request.POST.get("password")
 
-        ## Getting user's object for username ##
-        userObject = Usuario.objects.get(cpf=cpf)
+        try:
+            cpf = request.POST.get("cpf")
+            password = request.POST.get("password")
 
-        ## Authenticating the user ##
-        user = authenticate(request, username=userObject.username, password=password)
+            ## Getting user's object for username ##
+            userObject = Usuario.objects.get(cpf=cpf)
 
-        ## Authenticating the existence and loginning the user ##
-        if user is not None:
-            login(request, user)
+            ## Authenticating the user ##
+            user = authenticate(request, username=userObject.username, password=password)
 
-            return redirect(home)
+            ## Authenticating the existence and loginning the user ##
+            if user is not None:
+                login(request, user)
+
+                return redirect(home)
+            
+        except:
+            return redirect(loginPage)
 
     return render(request, 'sesi_login_page.html')
 
